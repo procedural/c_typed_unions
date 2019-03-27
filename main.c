@@ -1,35 +1,36 @@
 #include <stdio.h>
 
-struct TYPE_ANY {
+struct StructTypeAny {
   union {
-    struct TYPE_ONE {
+    struct StructTypeOne {
       float x;
       float y;
-    } TYPE_ONE;
-    struct TYPE_TWO {
+    } StructTypeOne;
+    struct StructTypeTwo {
       unsigned char z;
       unsigned char w;
-    } TYPE_TWO;
+    } StructTypeTwo;
   };
   int type;
-}; enum {
-  TYPE_ONE,
-  TYPE_TWO,
+};
+enum {
+  StructTypeOne = 0,
+  StructTypeTwo = 1,
 };
 
 int main() {
-  struct TYPE_ANY a = {
-    #define $ TYPE_ONE
+  struct StructTypeAny a = {
+    #define $ StructTypeOne
     .type = $,
     .$.x = -1,
     .$.y =  4,
   };
 
-  printf("a is TYPE_ONE? %d\n", a.type == TYPE_ONE);
-  printf("a is TYPE_TWO? %d\n", a.type == TYPE_TWO);
+  printf("a is StructTypeOne? %d\n", a.type == StructTypeOne);
+  printf("a is StructTypeTwo? %d\n", a.type == StructTypeTwo);
 
-  if (a.type == TYPE_ONE) {
-    struct TYPE_ONE * a_as_one = &a;
+  if (a.type == StructTypeOne) {
+    struct StructTypeOne * a_as_one = &a;
 
     a_as_one->x =  8.15f;
     a_as_one->y = 16.23f;
@@ -38,7 +39,7 @@ int main() {
     printf("a_as_one->y: %f\n", a_as_one->y);
   }
 
-  struct TYPE_TWO * a_as_two = a.type == TYPE_TWO ? &a : 0xDEAD;
+  struct StructTypeTwo * a_as_two = a.type == StructTypeTwo ? &a : 0xBAD;
 
   a_as_two->w = 42;
 
