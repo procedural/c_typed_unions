@@ -4,20 +4,22 @@ struct StructTypeOne {
   float x;
   float y;
 };
+
 struct StructTypeTwo {
   size_t z[100000];
   size_t w;
+};
+
+enum StructType {
+  StructTypeOne = 1,
+  StructTypeTwo = 2,
 };
 struct StructTypeAny {
   union {
     struct StructTypeOne StructTypeOne;
     struct StructTypeTwo StructTypeTwo;
   };
-  int type;
-};
-enum {
-  StructTypeOne = 1,
-  StructTypeTwo = 2,
+  enum StructType type;
 };
 
 int main() {
