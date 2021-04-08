@@ -14,6 +14,7 @@ enum StructType {
   StructTypeOne = 1,
   StructTypeTwo = 2,
 };
+
 struct StructTypeAny {
   union {
     struct StructTypeOne StructTypeOne;
@@ -24,10 +25,9 @@ struct StructTypeAny {
 
 int main() {
   struct StructTypeAny a = {};
-  #define $ StructTypeOne
-  a.type = $;
-  a.$.x = -1;
-  a.$.y =  4;
+  a.type            = StructTypeOne;
+  a.StructTypeOne.x =-1;
+  a.StructTypeOne.y = 4;
 
   printf("a is StructTypeOne? %d\n", a.type == StructTypeOne);
   printf("a is StructTypeTwo? %d\n", a.type == StructTypeTwo);
@@ -42,7 +42,7 @@ int main() {
     printf("a_as_one->y: %f\n", a_as_one->y);
   }
 
-  struct StructTypeTwo * a_as_two = a.type == StructTypeTwo ? (struct StructTypeTwo *)&a : (struct StructTypeTwo *)(void *)0x0000101010101010;
+  struct StructTypeTwo * a_as_two = a.type == StructTypeTwo ? (struct StructTypeTwo *)&a : (struct StructTypeTwo *)(void *)0x101010101010;
 
   a_as_two->w = 42;
 
